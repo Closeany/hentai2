@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Got UUUU(Watch less porn!)</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffe6e6;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; 
+            position: relative; 
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative; 
+            z-index: 10; 
+            width: 350px; 
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-group {
+            position: relative;
+            height: 60px;
+            width: 100%; 
+        }
+
+        button {
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100; 
+            position: absolute; 
+            bottom: 0; 
+        }
+
+        #yesBtn {
+            background-color: #ff4d4d;
+            color: white;
+            box-shadow: 0 4px 6px rgba(255, 77, 77, 0.3);
+            transition: all 0.3s ease; 
+            left: 50px;
+            z-index: 101;
+        }
+        #yesBtn:hover { transform: scale(1.1); background-color: #ff3333; }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #333;
+            transition: all 0.05s ease; 
+            right: 50px; 
+        }
+
+        /* 背景装饰爱心 */
+        .heart-bg {
+            position: absolute;
+            color: #ff9999; 
+            top: 100%; 
+            z-index: 0; 
+            user-select: none; 
+            pointer-events: none;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) translateX(100px) rotate(20deg); opacity: 0; }
+        }
+
+        /* 鼠标悬停冒泡爱心 */
+        .pop-heart {
+            position: fixed; color: #d60000; font-size: 20px; pointer-events: none; z-index: 102; animation: popUp 2.0s forwards ease-out;
+        }
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -80px) scale(1.2) rotate(20deg); opacity: 0; }
+        }
+
+        /* 掉落并消失的爱心雨 */
+        .falling-heart {
+            position: fixed;
+            color: #cc0000; 
+            z-index: 999; 
+            pointer-events: none; 
+            top: -10vh; 
+            animation: fallDown var(--fall-duration) linear forwards;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        @keyframes fallDown {
+            0% { top: -10vh; transform: translateX(0) rotate(0deg); opacity: 1; }
+            80% { opacity: 1; } 
+            100% { top: 110vh; transform: translateX(var(--random-x)) rotate(var(--random-rotate)); opacity: 0; } 
+        }
+
+        /* 组成巨大爱心的小粒子 */
+        .shape-heart {
+            position: fixed;
+            color: #ff0000;
+            font-size: 25px;
+            pointer-events: none;
+            z-index: 1000; 
+            animation: burstHeart 2.5s forwards ease-out; 
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); 
+        }
+
+        @keyframes burstHeart {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5); 
+            }
+            10% {
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            100% {
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(4.0); 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container">
+        <h1 id="mainTitle">Are u my best friend?</h1>
+        <div class="btn-group" id="btnGroup">
+            <div id="yesBtnContainer" style="position: absolute; left: 50px; bottom: 0;">
+                 <button id="yesBtn" style="position: relative; left: auto; bottom: auto;">Yes! 😍</button>
+            </div>
+            <button id="noBtn">No 😢</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtnContainer = document.getElementById('yesBtnContainer'); 
+        const yesBtn = document.getElementById('yesBtn');
+        const mainTitle = document.getElementById('mainTitle');
+        const btnGroup = document.getElementById('btnGroup');
+        
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+        function moveButton() {
+            const range = 200; 
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const randomOffsetX = (Math.random() * range * 2) - range;
+            const randomOffsetY = (Math.random() * range * 2) - range;
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = (centerX + randomOffsetX - noBtn.offsetWidth / 2) + 'px';
+            noBtn.style.top = (centerY + randomOffsetY - noBtn.offsetHeight / 2) + 'px';
+            noBtn.style.right = 'auto';
+            noBtn.style.bottom = 'auto';
+        }
+
+        yesBtn.addEventListener('click', () => {
+            mainTitle.innerText = "!!!Have damn gud life with all my hearts here!!!";
+            mainTitle.style.fontSize = "3rem"; 
+            btnGroup.style.display = 'none';   
+            
+            startFallingHearts();
+
+            setTimeout(() => {
+                createBigHeart();
+            }, 8000); 
+        });
+
+        function startFallingHearts() {
+            const interval = setInterval(() => {
+                for(let i=0; i<2; i++){
+                    const heart = document.createElement('div');
+                    heart.classList.add('falling-heart');
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+
+                    heart.style.setProperty('--random-rotate', Math.random() * 360 + 'deg');
+                    heart.style.setProperty('--random-x', (Math.random() * 60 - 30) + 'px'); 
+                    
+                    const duration = Math.random() * 2 + 2; 
+                    heart.style.setProperty('--fall-duration', duration + 's');
+
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => { heart.remove(); }, duration * 1000);
+                }
+            }, 30); 
+
+            setTimeout(() => {
+                clearInterval(interval);
+            }, 5500);
+        }
+
+        function createBigHeart() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const scale = 15; 
+            const particles = 100; 
+            
+            for (let i = 0; i < particles; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('shape-heart');
+                heart.innerHTML = '❤';
+                
+                const t = (Math.PI * 2 * i) / particles; 
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+                heart.style.left = centerX + (x * scale) + 'px';
+                heart.style.top = centerY + (y * scale) + 'px';
+                
+                heart.style.animationDelay = (Math.random() * 0.3) + 's';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000); 
+            }
+        }
+
+        // 鼠标跟随冒泡
+        let heartInterval;
+        let currentX = 0, currentY = 0;
+        yesBtnContainer.addEventListener('mouseenter', (e) => {
+            currentX = e.clientX; currentY = e.clientY;
+            if (heartInterval) clearInterval(heartInterval);
+            heartInterval = setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('pop-heart');
+                heart.innerHTML = '❤';
+                heart.style.left = currentX + 'px';
+                heart.style.top = currentY + 'px';
+                heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 40 - 20}deg)`;
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 2000);
+            }, 300); 
+        });
+        yesBtnContainer.addEventListener('mousemove', (e) => { currentX = e.clientX; currentY = e.clientY; });
+        yesBtnContainer.addEventListener('mouseleave', () => { clearInterval(heartInterval); });
+
+        // 背景装饰
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = '❤'; 
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                heart.style.animation = `floatHeart ${(Math.random() * 5 + 3)}s linear infinite`;
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 8000);
+            }, 100); 
+        }
+        createHearts();
+    </script>
+</body>
+</html>
